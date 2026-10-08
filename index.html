@@ -100,7 +100,7 @@ main{max-width:1240px;margin:0 auto;padding:32px 24px 120px}
 .oc{position:relative;overflow:hidden;padding:0}
 .oc-top{display:grid;grid-template-columns:220px 1fr;gap:32px;padding:40px 40px 32px}
 .portrait{width:220px;height:240px;border-radius:var(--r-xl);background:linear-gradient(160deg,#D9FFF7,#BFE9E2);overflow:hidden;position:relative;box-shadow:var(--shadow-hard-m)}
-.portrait svg{position:absolute;inset:0;width:100%;height:100%}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .oc-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .oc h1{margin-bottom:10px}
 .pt-name{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -555,7 +555,7 @@ main{max-width:1240px;margin:0 auto;padding:32px 24px 120px}
       <div class="blk"><b>How to measure</b><p>A/B test on the invite link: share of "Try it free" clicks reaching the first decision (primary), Opening Case completion, email capture, NPI entry, and later season completion. Guardrail: disclosure sections opened at least as often as today.</p></div>
     </div>
     <div class="credit">Design: <b>Maksim Koshcheev</b>, UX/UI and product designer · <a href="https://portfoliomaksim.framer.website/" target="_blank" rel="noopener">portfolio</a> · <a href="https://t.me/maksim_koshcheev" target="_blank" rel="noopener">@maksim_koshcheev</a>
-      <span class="disc">Concept not affiliated with Eximion. All patient data, numbers and names are fictional.</span></div>
+      <span class="disc">Concept not affiliated with Eximion. All patient data, numbers and names are fictional. Patient photo: Tim Myrzakhan on <a href="https://unsplash.com/photos/elderly-man-in-light-polo-shirt-K8yXdp7kAco" target="_blank" rel="noopener">Unsplash</a>, model is not a patient.</span></div>
     <button class="btn btn-primary w100" type="button" data-close style="margin-top:18px">Try the flow</button>
   </div>
 </div>
@@ -578,8 +578,8 @@ main{max-width:1240px;margin:0 auto;padding:32px 24px 120px}
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
-/* ---------- portrait illustration (custom, no stock) ---------- */
-var portrait='<svg viewBox="0 0 220 240" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9FBF7"/><stop offset="1" stop-color="#BFE9E2"/></linearGradient></defs><rect width="220" height="240" fill="url(#g1)"/><circle cx="178" cy="44" r="54" fill="#03A696" opacity=".08"/><path d="M28 240c4-46 36-70 82-70s78 24 82 70z" fill="#1F4E5A"/><path d="M92 170h36l-4 24h-28z" fill="#E7B997"/><path d="M96 176l14 22 14-22" fill="none" stroke="#FFFAF0" stroke-width="5" stroke-linejoin="round"/><ellipse cx="110" cy="112" rx="40" ry="48" fill="#F0C6A4"/><path d="M70 104c-2-30 18-50 42-50 22 0 42 16 40 46-6-14-14-22-26-24-14 8-36 8-56 28z" fill="#D9D9D9"/><path d="M72 100c-4 4-4 20 2 22M148 100c4 4 4 20-2 22" fill="none" stroke="#C9C9C9" stroke-width="6" stroke-linecap="round"/><path d="M90 108h12M118 108h12" stroke="#16171E" stroke-width="3" stroke-linecap="round"/><path d="M98 138c8 5 16 5 24 0" fill="none" stroke="#B5785A" stroke-width="3" stroke-linecap="round"/><path d="M110 112v14" stroke="#D9A07E" stroke-width="3" stroke-linecap="round"/><path d="M86 96l18 2M116 98l18-2" stroke="#BDBDBD" stroke-width="4" stroke-linecap="round"/></svg>';
+/* ---------- patient photo: Tim Myrzakhan, Unsplash License ---------- */
+var portrait='<img src="https://images.unsplash.com/photo-1790184633893-d223f754963a?w=480&h=520&fit=crop&crop=faces&q=80" alt="Patient C., 67" loading="eager" decoding="async">';
 $$('[data-portrait]').forEach(function(el){el.innerHTML=portrait});
 
 /* ---------- storage (safe) ---------- */
