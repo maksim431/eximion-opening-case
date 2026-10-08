@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opening Case · Eximion concept</title>
+<meta name="description" content="UX concept: start the Opening Case in one click. Design by Maksim Koshcheev. Not affiliated with Eximion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* tokens taken from my.eximion.com */
+  --color-primary:#03A696;
+  --color-primary-hover:#028A7D;
+  --color-primary-bg:rgba(3,166,150,.10);
+  --color-primary-bg-strong:rgba(3,166,150,.18);
+  --color-gold-1:#F8B849;
+  --color-gold-2:#FBCB6A;
+  --color-gold-bg:rgba(248,184,73,.20);
+  --color-yellow:#F9E27A;
+  --color-card:#FFFAF0;
+  --color-card-inner:#F5EEE0;
+  --color-text:#16171E;
+  --color-text-2:#4A4A4A;
+  --color-text-3:rgba(22,23,30,.6);
+  --color-line:rgba(22,23,30,.2);
+  --color-line-soft:rgba(22,23,30,.1);
+  --color-muted:rgba(136,136,136,.2);
+  /* status, derived from palette */
+  --color-success:#028A7D;
+  --color-success-bg:rgba(3,166,150,.12);
+  --color-danger:#C2413B;
+  --color-danger-bg:rgba(239,68,68,.12);
+  --color-miss:#9A6A0E;
+  --color-miss-bg:rgba(248,184,73,.25);
+  --shadow-hard-s:3px 3px 0 rgba(0,0,0,.1);
+  --shadow-hard-m:8px 8px 0 rgba(0,0,0,.1);
+  --shadow-soft:0 1px 3px rgba(45,45,45,.1);
+  --shadow-pop:0 8px 24px rgba(0,0,0,.16);
+  --r-s:6px; --r-m:8px; --r-l:16px; --r-xl:24px; --r-pill:999px;
+  --font:'Poppins',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);color:var(--color-text);min-height:100vh;
+  background:#FFFAF1 linear-gradient(180deg,#FFFAF1 0%,#ECC4C0 25%,#D8D1DB 50%,#D9FFF7 75%,#FFFAF1 100%) fixed;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- concept ribbon ---------- */
+.ribbon{background:var(--color-text);color:#FFFAF0;font-size:12px;display:flex;gap:12px;align-items:center;justify-content:center;padding:8px 16px;flex-wrap:wrap;text-align:center}
+.ribbon b{font-weight:600;letter-spacing:.06em}
+.ribbon button{color:var(--color-gold-2);font-weight:600;text-decoration:underline;font-size:12px}
+
+/* ---------- header (as in product) ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;max-width:1240px;margin:0 auto;gap:16px}
+.logo{font-weight:600;font-size:30px;letter-spacing:.22em;color:var(--color-text)}
+.logo small{display:block;font-size:10px;letter-spacing:.12em;color:var(--color-text-3);font-weight:500;margin-top:-4px}
+.user{display:flex;align-items:center;gap:14px}
+.btn-reg{background:var(--color-primary);color:#FFFAF0;font-size:12px;font-weight:600;text-transform:uppercase;padding:7px 12px;border-radius:var(--r-s);box-shadow:var(--shadow-hard-s)}
+.btn-reg:hover{background:var(--color-primary-hover)}
+.nick{font-size:16px;white-space:nowrap}
+.tabs{display:flex;max-width:1240px;margin:0 auto;padding:0 0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1 0 auto;min-width:150px;text-align:center;padding:20px 12px;border-radius:var(--r-l) var(--r-l) 0 0;font-weight:600;font-size:15px;text-transform:uppercase;background:linear-gradient(90deg,rgba(248,184,73,.2),rgba(251,203,106,.2),rgba(248,184,73,.2));line-height:1.1}
+.tab.on{background:linear-gradient(90deg,var(--color-gold-1) 3%,var(--color-gold-2) 21%,var(--color-gold-1) 42%,var(--color-gold-2) 60%,var(--color-gold-1) 97%)}
+.tabs-line{height:6px;background:rgba(22,23,30,.08);max-width:1240px;margin:0 auto}
+
+main{max-width:1240px;margin:0 auto;padding:32px 24px 120px}
+.view{display:none}
+.view.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- shared ---------- */
+.panel{background:var(--color-card);border:2px solid var(--color-primary);border-radius:var(--r-l);padding:40px;box-shadow:var(--shadow-soft)}
+.h-up{font-size:35px;font-weight:600;text-transform:uppercase;line-height:1.1;text-shadow:2px 2px 0 rgba(22,23,30,.12);letter-spacing:.01em}
+.over{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--color-primary-hover)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 36px;border-radius:var(--r-m);font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.02em;transition:transform .12s,box-shadow .12s,background .12s}
+.btn-primary{background:var(--color-primary);color:#FFFAF0;box-shadow:var(--shadow-hard-m)}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-primary:active{transform:translate(4px,4px);box-shadow:4px 4px 0 rgba(0,0,0,.1)}
+.btn-primary:disabled{background:#A7A7A7;cursor:not-allowed;box-shadow:var(--shadow-hard-s)}
+.btn-yellow{background:var(--color-yellow);color:var(--color-text);box-shadow:var(--shadow-hard-s)}
+.btn-yellow:hover{background:#F5D652}
+.btn-ghost{background:var(--color-primary-bg);color:var(--color-primary-hover);box-shadow:none}
+.btn-ghost:hover{background:var(--color-primary-bg-strong)}
+.link{color:var(--color-primary-hover);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:var(--r-pill);background:var(--color-primary-bg);color:var(--color-primary-hover);white-space:nowrap}
+.chip.gold{background:var(--color-gold-bg);color:#8A5A00}
+.chip.dark{background:var(--color-text);color:#FFFAF0}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ---------- START view ---------- */
+.start-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.oc{position:relative;overflow:hidden;padding:0}
+.oc-top{display:grid;grid-template-columns:220px 1fr;gap:32px;padding:40px 40px 32px}
+.portrait{width:220px;height:240px;border-radius:var(--r-xl);background:linear-gradient(160deg,#D9FFF7,#BFE9E2);overflow:hidden;position:relative;box-shadow:var(--shadow-hard-m)}
+.portrait svg{position:absolute;inset:0;width:100%;height:100%}
+.oc-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.oc h1{margin-bottom:10px}
+.pt-name{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pt-meta{font-size:14px;color:var(--color-text-3);margin-bottom:16px}
+.complaint{background:var(--color-card-inner);border-radius:var(--r-l);padding:16px 18px;font-size:15px;line-height:1.55}
+.oc-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px dashed var(--color-line-soft);margin:0 40px}
+.fact{padding:20px 0}
+.fact+.fact{padding-left:20px}
+.fact b{display:block;font-size:24px;font-weight:600;color:var(--color-primary-hover);line-height:1.2}
+.fact span{font-size:13px;color:var(--color-text-2)}
+.oc-cta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:8px 40px 40px}
+.oc-cta .btn{min-width:280px;min-height:60px;font-size:16px}
+.oc-cta p{font-size:13px;color:var(--color-text-3);max-width:260px;line-height:1.45}
+.resume{display:none;align-items:center;gap:16px;margin:24px 40px 0;padding:14px 18px;border-radius:var(--r-l);background:var(--color-gold-bg)}
+.resume.on{display:flex}
+.resume .bar{flex:1;height:8px;border-radius:99px;background:rgba(22,23,30,.1);overflow:hidden}
+.resume .bar i{display:block;height:100%;background:var(--color-primary);border-radius:99px}
+.resume span{font-size:13px;font-weight:600;white-space:nowrap}
+
+.path{margin-top:24px}
+.path h3{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.path ol{list-style:none;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;counter-reset:s}
+.path li{counter-increment:s;background:var(--color-card);border-radius:var(--r-l);padding:14px 10px;text-align:center;font-size:12px;line-height:1.3;box-shadow:var(--shadow-soft)}
+.path li::before{content:counter(s);display:grid;place-items:center;width:28px;height:28px;margin:0 auto 8px;border-radius:50%;border:2px solid var(--color-primary);color:var(--color-primary-hover);font-weight:600;background:#FFFAF0}
+.path li.you::before{background:var(--color-primary);color:#FFFAF0}
+.path li em{display:block;font-style:normal;color:var(--color-text-3);font-size:11px;margin-top:2px}
+
+/* accreditation side */
+.acc{padding:28px}
+.acc-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.acc-ico{flex:0 0 40px;height:40px;border-radius:12px;background:var(--color-primary-bg);display:grid;place-items:center;color:var(--color-primary-hover)}
+.acc-head h2{font-size:17px;font-weight:600;line-height:1.3}
+.acc-head p{font-size:13px;color:var(--color-text-3);margin-top:2px}
+.acc-key{display:grid;gap:8px;margin-bottom:16px}
+.acc-key div{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;background:var(--color-card-inner);padding:10px 12px;border-radius:12px}
+.acc-key svg{flex:0 0 16px;margin-top:2px;color:var(--color-primary)}
+.acc-list{border-top:1px solid var(--color-line-soft)}
+.acc-item{border-bottom:1px solid var(--color-line-soft)}
+.acc-item button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 2px;font-size:14px;font-weight:600;text-align:left;gap:12px}
+.acc-item button span{font-size:12px;font-weight:500;color:var(--color-text-3);margin-left:auto}
+.acc-item button svg{transition:transform .2s;flex:0 0 16px}
+.acc-item.open button svg{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 2px 16px;font-size:13px;line-height:1.6;color:var(--color-text-2)}
+.acc-item.open .acc-body{display:block}
+.acc-body ul{padding-left:18px;display:grid;gap:6px}
+.acc-foot{font-size:12px;color:var(--color-text-3);margin-top:14px;line-height:1.5}
+.browse{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px;padding:18px 22px;border-radius:var(--r-l);background:rgba(255,250,240,.6)}
+.browse p{font-size:13px;color:var(--color-text-2)}
+
+/* ---------- CASE view ---------- */
+.stepper{display:grid;grid-template-columns:repeat(7,1fr);position:relative;margin-bottom:32px}
+.stepper::before{content:"";position:absolute;left:7%;right:7%;top:15px;height:2px;background:var(--color-line)}
+.st{position:relative;text-align:center;font-size:11px;color:var(--color-text-3);line-height:1.3;padding:0 4px}
+.st i{display:grid;place-items:center;width:32px;height:32px;margin:0 auto 6px;border-radius:50%;border:2px solid var(--color-line);background:var(--color-card);font-style:normal;font-weight:600;font-size:12px;color:var(--color-text-3);position:relative;z-index:1}
+.st.done i{background:var(--color-primary);border-color:var(--color-primary);color:#FFFAF0}
+.st.now i{border-color:var(--color-primary);color:var(--color-primary-hover);box-shadow:0 0 0 4px rgba(3,166,150,.2)}
+.st.now{color:var(--color-text);font-weight:600}
+.case-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:28px}
+.case-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.timer{font-size:13px;font-weight:600;color:var(--color-text-2);background:var(--color-card-inner);padding:8px 12px;border-radius:var(--r-pill)}
+.case-grid{display:grid;grid-template-columns:200px 1fr;gap:32px}
+.mini-pt{text-align:left}
+.mini-pt .portrait{width:200px;height:200px;margin-bottom:14px}
+.mini-pt b{font-size:16px;font-weight:600;display:block}
+.mini-pt small{font-size:13px;color:var(--color-text-3)}
+.case-body p.lead{font-size:16px;line-height:1.6;margin-bottom:16px}
+.case-body .prompt{font-size:15px;font-weight:600;margin-bottom:6px}
+.case-body .hint{font-size:13px;color:var(--color-text-3);margin-bottom:16px}
+.given{background:var(--color-card-inner);border-radius:var(--r-l);padding:18px 20px;font-size:15px;line-height:1.6;margin-bottom:12px}
+.given b{font-weight:600}
+.given-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-3);margin-bottom:6px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:12px;background:#fff;border:2px solid transparent;font-size:14px;line-height:1.4;box-shadow:var(--shadow-soft);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--color-primary-bg-strong)}
+.opt .box{flex:0 0 20px;height:20px;border-radius:6px;border:2px solid var(--color-line);display:grid;place-items:center;margin-top:1px;transition:.15s}
+.opt.radio .box{border-radius:50%}
+.opt.sel{border-color:var(--color-primary);background:#F2FBF9}
+.opt.sel .box{background:var(--color-primary);border-color:var(--color-primary)}
+.opt.sel .box::after{content:"";width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.opt.radio.sel .box::after{width:8px;height:8px;border:0;border-radius:50%;background:#fff;transform:none}
+.opt.locked{opacity:.45;cursor:not-allowed}
+.answer{display:block;font-size:13px;color:var(--color-primary-hover);margin-top:6px;font-weight:500}
+.conf{margin:4px 0 24px;padding:16px 18px;background:var(--color-card-inner);border-radius:var(--r-l)}
+.conf label{font-size:14px;font-weight:600;display:flex;justify-content:space-between}
+.conf input{width:100%;accent-color:var(--color-primary);margin-top:10px}
+.conf small{display:flex;justify-content:space-between;font-size:12px;color:var(--color-text-3)}
+.case-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:20px;border-top:2px dashed var(--color-line-soft)}
+.case-nav .counter{font-size:13px;color:var(--color-text-3)}
+
+/* ---------- RESULT view ---------- */
+.res-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.score-row{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;margin:24px 0 28px}
+.ring{width:150px;height:150px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .lbl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring b{font-size:40px;font-weight:600;line-height:1;color:var(--color-primary-hover)}
+.ring b sup{font-size:16px}
+.ring span{font-size:11px;color:var(--color-text-3);display:block;margin-top:4px}
+.score-txt h2{font-size:22px;font-weight:600;line-height:1.3;margin-bottom:8px}
+.score-txt p{font-size:14px;color:var(--color-text-2);line-height:1.55}
+.pts{display:inline-flex;align-items:baseline;gap:6px;margin-top:12px;font-weight:600}
+.pts b{font-size:28px}
+.db h3{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.db-row{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--color-line-soft);font-size:14px}
+.db-row .n{width:28px;height:28px;border-radius:50%;background:var(--color-primary-bg);color:var(--color-primary-hover);display:grid;place-items:center;font-size:12px;font-weight:600}
+.db-row.dg .n{background:var(--color-muted);color:var(--color-text-3)}
+.db-row small{display:block;font-size:12px;color:var(--color-text-3)}
+.db-chips{display:flex;gap:6px}
+.dc{font-size:12px;font-weight:600;padding:4px 9px;border-radius:var(--r-pill)}
+.dc.ok{background:var(--color-success-bg);color:var(--color-success)}
+.dc.bad{background:var(--color-danger-bg);color:var(--color-danger)}
+.dc.miss{background:var(--color-miss-bg);color:var(--color-miss)}
+.turn{margin-top:20px;padding:16px 18px;border-radius:var(--r-l);background:var(--color-gold-bg);font-size:14px;line-height:1.55}
+.turn b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;color:#8A5A00}
+.side-card{padding:28px}
+.side-card+.side-card{margin-top:24px}
+.cme-amt{display:flex;align-items:baseline;gap:8px;margin:10px 0 4px}
+.cme-amt b{font-size:44px;font-weight:600;color:var(--color-primary-hover);line-height:1}
+.cme-amt span{font-size:14px;color:var(--color-text-2)}
+.side-card p.small{font-size:13px;color:var(--color-text-3);line-height:1.5;margin-bottom:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;font-weight:600;margin-bottom:6px}
+.field input{width:100%;height:48px;border-radius:12px;border:2px solid transparent;background:var(--color-card-inner);padding:0 14px;font:inherit;font-size:15px;color:var(--color-text);outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--color-primary)}
+.field.err input{border-color:var(--color-danger)}
+.field .msg{display:none;font-size:12px;color:var(--color-danger);margin-top:4px}
+.field.err .msg{display:block}
+.w100{width:100%}
+.done-box{display:none;text-align:center;padding:12px 0 4px}
+.done-box.on{display:block}
+.done-box .ok-ico{width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:var(--color-primary);display:grid;place-items:center;box-shadow:var(--shadow-hard-s)}
+.done-box h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.done-box p{font-size:13px;color:var(--color-text-2);line-height:1.5}
+.next-list{display:grid;gap:10px;margin:14px 0 18px}
+.next-list div{display:flex;gap:12px;align-items:center;font-size:13px;line-height:1.4}
+.next-list i{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:600;background:var(--color-primary-bg);color:var(--color-primary-hover)}
+.next-list .done i{background:var(--color-primary);color:#fff}
+
+/* ---------- HUB (existing screen, simplified) ---------- */
+.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.pcard{background:#F1F8F7;border-radius:12px;padding:16px;box-shadow:var(--shadow-hard-s);text-align:left;font-size:14px;line-height:1.45;display:flex;flex-direction:column;gap:8px}
+.pcard .tag{align-self:flex-start}
+.pcard b{font-size:15px}
+.pcard.locked{filter:blur(1.5px);opacity:.6;pointer-events:none}
+.pcard.pin{outline:2px solid var(--color-primary)}
+
+/* ---------- modal / toast ---------- */
+.ov{position:fixed;inset:0;background:rgba(22,23,30,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.ov.on{display:flex;animation:fade .2s}
+.modal{background:var(--color-card);border:6px solid var(--color-primary);border-radius:var(--r-xl);max-width:720px;width:100%;max-height:calc(100vh - 32px);overflow:auto;padding:36px;position:relative}
+.modal .x{position:absolute;right:20px;top:18px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:22px}
+.modal .x:hover{background:var(--color-primary-bg)}
+.concept h2{font-size:26px;font-weight:600;text-transform:uppercase;margin:6px 0 18px;line-height:1.15;text-shadow:2px 2px 0 rgba(22,23,30,.1)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.cmp div{border-radius:var(--r-l);padding:16px}
+.cmp .was{background:var(--color-danger-bg)}
+.cmp .now{background:var(--color-success-bg)}
+.cmp b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.cmp .big{font-size:30px;font-weight:600;line-height:1.1}
+.cmp p{font-size:13px;line-height:1.5;margin-top:6px}
+.cmp .was .big{color:var(--color-danger)}
+.cmp .now .big{color:var(--color-success)}
+.blocks{display:grid;gap:12px}
+.blk{background:#fff;border-radius:var(--r-l);padding:14px 16px;box-shadow:var(--shadow-soft)}
+.blk b{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-primary-hover);display:block;margin-bottom:4px}
+.blk p{font-size:14px;line-height:1.55;color:var(--color-text-2)}
+.credit{margin-top:18px;font-size:13px;line-height:1.6;color:var(--color-text-2);border-top:2px dashed var(--color-line-soft);padding-top:16px}
+.credit a{color:var(--color-primary-hover);font-weight:600}
+.credit .disc{display:block;font-size:12px;color:var(--color-text-3);margin-top:6px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);background:var(--color-text);color:#FFFAF0;padding:12px 18px;border-radius:12px;font-size:14px;display:flex;gap:10px;align-items:center;opacity:0;pointer-events:none;transition:.25s;z-index:60;box-shadow:var(--shadow-pop);max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast i{width:20px;height:20px;border-radius:50%;background:var(--color-primary);display:grid;place-items:center;font-style:normal;font-size:12px;flex:0 0 20px}
+.fab{position:fixed;right:20px;bottom:20px;width:56px;height:56px;border-radius:50%;background:var(--color-primary);display:grid;place-items:center;box-shadow:var(--shadow-pop);z-index:40}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .start-grid,.res-grid{grid-template-columns:1fr}
+  .path ol{grid-template-columns:repeat(4,1fr)}
+}
+@media (max-width:760px){
+  .top{padding:14px 16px 12px}
+  .logo{font-size:22px}
+  .nick{display:none}
+  .tab{min-width:130px;font-size:13px;padding:14px 10px}
+  main{padding:20px 16px 110px}
+  .panel{padding:22px 18px}
+  .oc{padding:0}
+  .oc-top{grid-template-columns:1fr;padding:22px 18px 18px;gap:18px}
+  .portrait{width:100%;height:170px}
+  .oc-facts{margin:0 18px}
+  .fact b{font-size:19px}
+  .fact+.fact{padding-left:12px}
+  .oc-cta{padding:8px 18px 22px}
+  .oc-cta .btn{width:100%;min-width:0}
+  .oc-cta p{max-width:none}
+  .resume{margin:18px 18px 0;flex-wrap:wrap}.resume .bar{flex-basis:100%;order:3}
+  .h-up{font-size:25px}
+  .path ol{grid-template-columns:repeat(2,1fr)}
+  .path li:last-child{grid-column:span 2}
+  .case-grid{grid-template-columns:1fr;gap:18px}
+  .mini-pt{display:flex;gap:14px;align-items:center}
+  .mini-pt .portrait{width:72px;height:72px;margin:0;border-radius:16px;box-shadow:var(--shadow-hard-s)}
+  .opts{grid-template-columns:1fr}
+  .stepper{grid-template-columns:repeat(7,1fr);margin-bottom:22px}
+  .st span{display:none}
+  .st i{width:26px;height:26px;font-size:11px}
+  .stepper::before{top:12px}
+  .case-head{flex-direction:column}
+  .case-tools{justify-content:flex-start}
+  .case-nav .btn{width:100%}
+  .case-nav{flex-direction:column-reverse;align-items:stretch;text-align:center}
+  .score-row{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .hub-grid{grid-template-columns:1fr}
+  .browse{flex-direction:column;align-items:flex-start}
+  .modal{padding:26px 18px;border-width:4px}
+  .cmp{grid-template-columns:1fr}
+  .concept h2{font-size:21px;padding-right:36px}
+  .db-row{grid-template-columns:28px 1fr}
+  .db-chips{grid-column:2}
+}
+@media (max-width:420px){
+  .btn-reg{font-size:11px;padding:6px 10px}
+  .oc-facts{grid-template-columns:1fr 1fr 1fr}
+  .fact span{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><b>UX CONCEPT</b><span>Not an official Eximion product · fictional data</span><button type="button" data-open-concept>About the concept</button></div>
+
+<header>
+  <div class="top">
+    <div class="logo" aria-label="Eximion">EXIMION<small>CONCEPT</small></div>
+    <div class="user">
+      <button class="btn-reg" type="button" data-go-reg>Register</button>
+      <span class="nick">Royal Ivory Dolphin 8182</span>
+    </div>
+  </div>
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab" type="button" data-soon="Skill profile">Skill profile</button>
+    <button class="tab on" type="button" data-view-link="start">Competition</button>
+    <button class="tab" type="button" data-soon="Leaderboard">Leaderboard</button>
+    <button class="tab" type="button" data-soon="State Cup">State Cup</button>
+    <button class="tab" type="button" data-scroll-acc>Accreditation information</button>
+  </nav>
+  <div class="tabs-line"></div>
+</header>
+
+<main>
+<!-- ================= START ================= -->
+<section class="view on" id="v-start" aria-labelledby="oc-title">
+  <div class="start-grid">
+    <div>
+      <article class="panel oc">
+        <div class="resume" id="resume" role="status">
+          <span id="resumeTxt">Step 3 of 7</span>
+          <div class="bar"><i id="resumeBar" style="width:30%"></i></div>
+          <button class="link" type="button" id="restart">Start over</button>
+        </div>
+        <div class="oc-top">
+          <div class="portrait" aria-hidden="true" data-portrait></div>
+          <div>
+            <div class="oc-badges">
+              <span class="chip dark"><span class="dot"></span>Opening Case</span>
+              <span class="chip gold">Pulmonology · Fall Championship 2026</span>
+            </div>
+            <h1 class="h-up" id="oc-title">The undiagnosed patient</h1>
+            <div class="pt-name"><span aria-hidden="true">♂</span>Patient C., 67 years old</div>
+            <div class="pt-meta">Former smoker · walk-in referral from primary care</div>
+            <div class="complaint">Dyspnea on minimal exertion (mMRC 3), dry cough, weakness and 5 kg (11 lb) unintentional weight loss over 3 months. No diagnosis, no answer options. You decide what to ask, test and treat.</div>
+          </div>
+        </div>
+        <div class="oc-facts">
+          <div class="fact"><b>~8 min</b><span>one sitting, saves as you go</span></div>
+          <div class="fact"><b>0.25</b><span>AMA PRA Category 1 Credit™</span></div>
+          <div class="fact"><b>0</b><span>accounts or forms to start</span></div>
+        </div>
+        <div class="oc-cta">
+          <button class="btn btn-primary" type="button" id="startBtn">Start the case <span aria-hidden="true">→</span></button>
+          <p id="startNote">Name and email only after the case, to claim your credit. NPI check only to enter the ranking.</p>
+        </div>
+      </article>
+
+      <div class="path">
+        <h3>What happens in the next 8 minutes</h3>
+        <ol>
+          <li class="you">Complaints<em>given</em></li>
+          <li class="you">Interview<em>your questions</em></li>
+          <li>Examination<em>given</em></li>
+          <li class="you">Workup<em>your tests</em></li>
+          <li>Results<em>given</em></li>
+          <li class="you">Diagnosis<em>your call</em></li>
+          <li class="you">Plan<em>your plan</em></li>
+        </ol>
+      </div>
+
+      <div class="browse">
+        <p>Looking for duels or a different patient? All of it is still here.</p>
+        <button class="link" type="button" data-view-link="hub">Browse all cases and duels →</button>
+      </div>
+    </div>
+
+    <aside class="panel acc" id="acc" aria-labelledby="acc-title">
+      <div class="acc-head">
+        <div class="acc-ico" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div>
+          <h2 id="acc-title">Before you start: accredited activity</h2>
+          <p>Required disclosures. Open any section, nothing to sign.</p>
+        </div>
+      </div>
+      <div class="acc-key">
+        <div><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg><span>Jointly provided by an ACCME-accredited provider and Eximion Medical Education.</span></div>
+        <div><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg><span>Supported by an independent educational grant. The supporter has no role in cases or scoring.</span></div>
+        <div><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4"/></svg><span>AI-assisted, not AI-generated. Every case is validated by faculty.</span></div>
+      </div>
+      <div class="acc-list">
+        <div class="acc-item"><button type="button" aria-expanded="false">Learning objectives<span>3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body"><ul><li>Recognize presentations that call for HRCT rather than another round of empiric COPD treatment.</li><li>Classify fibrotic ILD by HRCT pattern and know when to refer for multidisciplinary discussion.</li><li>Tell IPF apart from its mimics and identify who needs antifibrotic therapy.</li></ul></div></div>
+        <div class="acc-item"><button type="button" aria-expanded="false">Faculty and disclosures<span>4 people</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body">Four practicing pulmonologists, one as Faculty Chair. Each person's financial relationships are listed here in full, one card per faculty member, and were mitigated under the accredited provider's policy. <em>Placeholder in this concept.</em></div></div>
+        <div class="acc-item"><button type="button" aria-expanded="false">How AI is used<span>3 uses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body"><ul><li>Drafting some candidate cases. Faculty set and validate every clinical pathway.</li><li>De-identified, aggregate analysis of decisions for outcomes reporting.</li><li>Flagging possible duplicate registrations for human review. AI makes no credit decisions.</li></ul></div></div>
+        <div class="acc-item"><button type="button" aria-expanded="false">Credit and how to claim<span>up to 4.0</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body">0.25 AMA PRA Category 1 Credit™ per accredited case, up to 4.0 per season, plus up to 4.0 ABIM MOC points. Claim only the credit that matches your participation. Complete each case and the short evaluation to claim.</div></div>
+        <div class="acc-item"><button type="button" aria-expanded="false">Unlabeled use, disclaimer, system requirements<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="acc-body">Full standard text lives here, unchanged from the accredited activity page. Runs in any current browser on phone, tablet or desktop.</div></div>
+      </div>
+      <p class="acc-foot">Release date July 1, 2026 · Expires July 1, 2027 · Full accreditation page always available in the tab above.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= CASE ================= -->
+<section class="view" id="v-case" aria-live="polite">
+  <div class="panel">
+    <div class="stepper" id="stepper"></div>
+    <div class="case-head">
+      <h2 class="h-up" id="stepTitle">Complaints and anamnesis</h2>
+      <div class="case-tools">
+        <span class="timer" id="timer">0:00</span>
+        <button class="btn btn-yellow" type="button" id="saveExit" style="min-height:40px;padding:0 16px;font-size:12px">Save &amp; exit</button>
+      </div>
+    </div>
+    <div class="case-grid">
+      <div class="mini-pt">
+        <div class="portrait" aria-hidden="true" data-portrait></div>
+        <div><b>Patient C., 67</b><small>Opening Case · visit 1</small></div>
+      </div>
+      <div class="case-body" id="stepBody"></div>
+    </div>
+    <div class="case-nav">
+      <span class="counter" id="stepCounter"></span>
+      <button class="btn btn-primary" type="button" id="nextBtn">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section class="view" id="v-result">
+  <div class="res-grid">
+    <div class="panel">
+      <span class="over">Case closed · Opening Case</span>
+      <h2 class="h-up" style="margin-top:8px">Your debrief</h2>
+      <div class="score-row">
+        <div class="ring">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(22,23,30,.08)" stroke-width="12"/><circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="#03A696" stroke-width="12" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" style="transition:stroke-dashoffset 1s ease"/></svg>
+          <div class="lbl"><b id="pctNum">0<sup>th</sup></b><span>percentile</span></div>
+        </div>
+        <div class="score-txt">
+          <h2 id="pctSay">Ahead of 0% of pulmonologists who worked this case</h2>
+          <p>Compared with 412 community pulmonologists so far. Your answers sit under an anonymous ID.</p>
+          <div class="pts"><b id="ptsNum">0</b><span>/ 6 points from diagnosis and plan</span></div>
+        </div>
+      </div>
+      <div class="db">
+        <h3>Every decision, and the fork you went past</h3>
+        <div id="dbRows"></div>
+        <div class="turn" id="turn"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel side-card" id="claimCard">
+        <span class="over">CME bank</span>
+        <div class="cme-amt"><b>0.25</b><span>credit earned, ready to claim</span></div>
+        <p class="small">Add your name and email to keep this credit and your score. That is all for now.</p>
+        <form id="claimForm" novalidate>
+          <div class="field" id="fName"><label for="iName">Full name and degree</label><input id="iName" autocomplete="name" placeholder="Jordan Ellis, MD"><div class="msg">Enter your name as it should appear on the certificate</div></div>
+          <div class="field" id="fMail"><label for="iMail">Work email</label><input id="iMail" type="email" autocomplete="email" placeholder="j.ellis@clinic.org"><div class="msg">Check the email format</div></div>
+          <button class="btn btn-primary w100" type="submit">Save my credit</button>
+        </form>
+        <div class="done-box" id="claimDone">
+          <div class="ok-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></div>
+          <h3>0.25 credit saved</h3>
+          <p id="claimTxt">We sent a link to your email. Your certificate is ready after the 2-minute evaluation.</p>
+        </div>
+      </div>
+
+      <div class="panel side-card">
+        <span class="over">Next: the ranked championship</span>
+        <div class="next-list" id="nextList">
+          <div class="done"><i>✓</i><span>Opening Case cleared</span></div>
+          <div id="nlEmail"><i>2</i><span>Name and email · credit saved</span></div>
+          <div><i>3</i><span>One-time NPI check · about 2 minutes</span></div>
+          <div><i>4</i><span>19 more patients, up to 4.0 credits, national and state ranking</span></div>
+        </div>
+        <button class="btn btn-ghost w100" type="button" id="npiBtn">Enter the championship</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HUB ================= -->
+<section class="view" id="v-hub">
+  <div class="panel">
+    <div class="case-head" style="margin-bottom:8px">
+      <h2 class="h-up">Select a patient</h2>
+      <button class="link" type="button" data-view-link="start">← Back to the Opening Case</button>
+    </div>
+    <p style="font-size:14px;color:var(--color-text-2)">The current hub, kept as a secondary route. The Opening Case is pinned first.</p>
+    <div class="hub-grid">
+      <button class="pcard pin" type="button" data-view-link="start"><span class="chip dark tag">Opening Case</span><b>♂ Patient C., 67 years old</b><span>Dyspnea on minimal exertion, dry cough, 5 kg weight loss over 3 months.</span></button>
+      <button class="pcard" type="button" data-soon="This case"><span class="chip tag">+ 900 points</span><b>♂ Patient K., 63 years old</b><span>Morning cough with clear phlegm, wheezing, chest tightness on exertion.</span></button>
+      <button class="pcard" type="button" data-soon="Duels"><span class="chip gold tag">Duel · no CME</span><b>Head-to-head</b><span>Ten focused questions against another pulmonologist.</span></button>
+      <div class="pcard locked" aria-hidden="true"><b>Patient V., 72</b><span>Dry hacking cough, can no longer climb to her third floor.</span></div>
+      <div class="pcard locked" aria-hidden="true"><b>Patient K., 54</b><span>Exertional dyspnea, worse over the past year.</span></div>
+      <div class="pcard locked" aria-hidden="true"><b>Patient M., 74</b><span>Progressive exertional dyspnea and dry cough over 6 months.</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<button class="fab" type="button" aria-label="Support chat" data-soon="Support chat"><svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFAF0"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.5 1.2 4.7 3.2 6.3L4.5 22l4.1-2.2c1.1.3 2.2.5 3.4.5 5.5 0 10-3.9 10-8.6S17.5 3 12 3z"/></svg></button>
+
+<!-- concept modal -->
+<div class="ov" id="concept" role="dialog" aria-modal="true" aria-labelledby="cTitle">
+  <div class="modal concept">
+    <button class="x" type="button" data-close aria-label="Close">×</button>
+    <span class="over">About the concept</span>
+    <h2 id="cTitle">Keep the landing page's promise: the case starts on click</h2>
+    <div class="cmp">
+      <div class="was"><b>Today, after "Try it free"</b><div class="big">5 screens</div><p>About 1,500 words of accreditation text, then a hub with Duel first, a patient list without the "Opening Case" label, and one more modal.</p></div>
+      <div class="now"><b>Concept</b><div class="big">1 click</div><p>The promised patient, ~8 min, 0.25 credit and the "Start" button on one screen. Disclosures stay before the activity, folded into sections.</p></div>
+    </div>
+    <div class="blocks">
+      <div class="blk"><b>Problem</b><p>Landings sell one step: an undiagnosed patient in about 8 minutes, no sign-up. The click leads to a wall of disclosures and a choice between modes instead. The company's own published completion rate from the last season is 55%, and this first stretch is where the whole funnel starts.</p></div>
+      <div class="blk"><b>Hypothesis</b><p>If a physician clicking "Try it free" lands straight on the Opening Case card with one primary action, more of them reach the first clinical decision and later register with NPI, because the product matches what the landing promised.</p></div>
+      <div class="blk"><b>Solution</b><p>A single start screen: the patient, three facts (time, credit, no forms), the case path, one "Start the case" button. Accreditation becomes a compact side panel with expandable sections. Name and email are asked only after the debrief, when the credit is already earned. The current hub remains a secondary link.</p></div>
+      <div class="blk"><b>How to measure</b><p>A/B test on the invite link: share of "Try it free" clicks reaching the first decision (primary), Opening Case completion, email capture, NPI entry, and later season completion. Guardrail: disclosure sections opened at least as often as today.</p></div>
+    </div>
+    <div class="credit">Design: <b>Maksim Koshcheev</b>, UX/UI and product designer · <a href="https://portfoliomaksim.framer.website/" target="_blank" rel="noopener">portfolio</a> · <a href="https://t.me/maksim_koshcheev" target="_blank" rel="noopener">@maksim_koshcheev</a>
+      <span class="disc">Concept not affiliated with Eximion. All patient data, numbers and names are fictional.</span></div>
+    <button class="btn btn-primary w100" type="button" data-close style="margin-top:18px">Try the flow</button>
+  </div>
+</div>
+
+<!-- info modal -->
+<div class="ov" id="info" role="dialog" aria-modal="true" aria-labelledby="iTitle">
+  <div class="modal" style="max-width:460px;text-align:center">
+    <button class="x" type="button" data-close aria-label="Close">×</button>
+    <h2 id="iTitle" style="font-size:20px;font-weight:600;margin:8px 0 10px">Outside this concept</h2>
+    <p id="iTxt" style="font-size:14px;color:var(--color-text-2);line-height:1.55;margin-bottom:20px"></p>
+    <button class="btn btn-primary w100" type="button" data-close>Got it</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"><i>✓</i><span id="toastTxt"></span></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+/* ---------- portrait illustration (custom, no stock) ---------- */
+var portrait='<svg viewBox="0 0 220 240" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9FBF7"/><stop offset="1" stop-color="#BFE9E2"/></linearGradient></defs><rect width="220" height="240" fill="url(#g1)"/><circle cx="178" cy="44" r="54" fill="#03A696" opacity=".08"/><path d="M28 240c4-46 36-70 82-70s78 24 82 70z" fill="#1F4E5A"/><path d="M92 170h36l-4 24h-28z" fill="#E7B997"/><path d="M96 176l14 22 14-22" fill="none" stroke="#FFFAF0" stroke-width="5" stroke-linejoin="round"/><ellipse cx="110" cy="112" rx="40" ry="48" fill="#F0C6A4"/><path d="M70 104c-2-30 18-50 42-50 22 0 42 16 40 46-6-14-14-22-26-24-14 8-36 8-56 28z" fill="#D9D9D9"/><path d="M72 100c-4 4-4 20 2 22M148 100c4 4 4 20-2 22" fill="none" stroke="#C9C9C9" stroke-width="6" stroke-linecap="round"/><path d="M90 108h12M118 108h12" stroke="#16171E" stroke-width="3" stroke-linecap="round"/><path d="M98 138c8 5 16 5 24 0" fill="none" stroke="#B5785A" stroke-width="3" stroke-linecap="round"/><path d="M110 112v14" stroke="#D9A07E" stroke-width="3" stroke-linecap="round"/><path d="M86 96l18 2M116 98l18-2" stroke="#BDBDBD" stroke-width="4" stroke-linecap="round"/></svg>';
+$$('[data-portrait]').forEach(function(el){el.innerHTML=portrait});
+
+/* ---------- storage (safe) ---------- */
+var KEY='eximion-oc-concept-v1';
+function load(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({step:state.step,sel:state.sel,conf:state.conf,secs:state.secs}))}catch(e){}}
+function clear(){try{localStorage.removeItem(KEY)}catch(e){}}
+
+/* ---------- case data (fictional) ---------- */
+var STEPS=[
+ {id:'complaints',label:'Complaints and anamnesis',type:'given',html:
+  '<p class="lead">Breathless for 8 months, put down to age. Three months later a dry cough began; primary care treated it as a chronic bronchitis flare. He kept getting worse and was referred to you.</p>'+
+  '<div class="given"><span class="given-tag">History · given to you</span><br>Former smoker, 25 pack-years, quit 10 years ago. Retired design engineer. Hypertension on lisinopril and amlodipine. No prior lung imaging.</div>'},
+ {id:'interview',label:'Patient interview',type:'multi',max:5,prompt:'Which questions do you ask?',hint:'Choose up to 5. Each answer appears as you ask.',opts:[
+  {t:'Any work with dust, metals, wood or stone?',ok:1,a:'Office-based engineer for 30 years. No dust work.'},
+  {t:'Birds, feather bedding, humidifiers or mold at home?',ok:1,a:'No birds, no humidifier, no visible mold.'},
+  {t:'Joint pain, morning stiffness, Raynaud, rashes?',ok:1,a:'Denies all of them.'},
+  {t:'Anyone in the family with scarred lungs?',ok:1,a:'His older brother had "lung scarring" and died at 74.'},
+  {t:'Ever taken amiodarone, nitrofurantoin or methotrexate?',ok:1,a:'Never. Only his two blood pressure pills.'},
+  {t:'Any recent travel abroad?',ok:0,a:'Florida last spring. Nothing else.'},
+  {t:'Chest pain on exertion?',ok:0,a:'No chest pain.'},
+  {t:'Snoring or daytime sleepiness?',ok:0,a:'Mild snoring, sleeps well.'}]},
+ {id:'exam',label:'Physical examination',type:'given',html:
+  '<div class="given"><span class="given-tag">Examination · given to you</span><br>Fine bibasilar inspiratory "Velcro" crackles. Digital clubbing. SpO₂ <b>93%</b> at rest, <b>87%</b> after one flight of stairs. No edema, normal heart sounds.</div>'},
+ {id:'workup',label:'Workup',type:'multi',max:8,prompt:'What do you order?',hint:'Choose all the tests you would order today.',opts:[
+  {t:'High-resolution CT of the chest',ok:1},
+  {t:'Full PFTs with DLCO',ok:1},
+  {t:'ANA, RF, anti-CCP, myositis panel',ok:1},
+  {t:'6-minute walk test with oximetry',ok:1},
+  {t:'Sputum culture',ok:0},
+  {t:'Bronchoscopy with biopsy now',ok:0},
+  {t:'D-dimer',ok:0},
+  {t:'Echocardiogram',ok:1}]},
+ {id:'results',label:'Results',type:'given',html:
+  '<div class="given"><span class="given-tag">HRCT</span><br>Subpleural, basal-predominant reticulation with traction bronchiectasis and honeycombing. <b>UIP pattern.</b></div>'+
+  '<div class="given"><span class="given-tag">PFTs · 6MWT · serology · echo</span><br>FVC 64% predicted, DLCO 41%. Walked 310 m, nadir SpO₂ 84%. Autoimmune panel negative. Echo: normal LV, estimated PASP 34 mmHg.</div>'},
+ {id:'diagnosis',label:'Diagnosis',type:'single',prompt:'Commit to a diagnosis',hint:'One answer, then rate your confidence.',opts:[
+  {t:'Idiopathic pulmonary fibrosis',ok:1},
+  {t:'Fibrotic hypersensitivity pneumonitis',ok:0},
+  {t:'Connective tissue disease associated ILD',ok:0},
+  {t:'COPD with emphysema',ok:0},
+  {t:'Lung cancer',ok:0}]},
+ {id:'plan',label:'Treatment plan',type:'multi',max:8,prompt:'Build your plan',hint:'Choose everything you would do.',opts:[
+  {t:'Discuss at an ILD multidisciplinary meeting',ok:1},
+  {t:'Start an antifibrotic (nintedanib or pirfenidone)',ok:1},
+  {t:'Assess for ambulatory oxygen',ok:1},
+  {t:'Refer to pulmonary rehabilitation',ok:1},
+  {t:'Long course of oral prednisone',ok:0},
+  {t:'Inhaled steroid with a LABA',ok:0}]}
+];
+var SHORT=['Complaints','Interview','Examination','Workup','Results','Diagnosis','Plan'];
+
+var state={step:0,sel:{},conf:3,secs:0};
+var timerId=null;
+
+/* ---------- views ---------- */
+function show(v){
+  $$('.view').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v)});
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(v==='case'){startTimer()}else{stopTimer()}
+  if(v==='start'){renderResume()}
+}
+function startTimer(){stopTimer();timerId=setInterval(function(){state.secs++;$('#timer').textContent=fmt(state.secs)},1000);$('#timer').textContent=fmt(state.secs)}
+function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
+function fmt(s){return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+
+/* ---------- toast & modals ---------- */
+var tt=null;
+function toast(msg){$('#toastTxt').textContent=msg;$('#toast').classList.add('on');clearTimeout(tt);tt=setTimeout(function(){$('#toast').classList.remove('on')},2400)}
+function openOv(id){$('#'+id).classList.add('on');var b=$('#'+id+' [data-close]');if(b)b.focus()}
+function closeOv(el){el.classList.remove('on')}
+$$('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o||e.target.closest('[data-close]'))closeOv(o)})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$$('.ov.on').forEach(closeOv)});
+function info(name){$('#iTxt').textContent=name+' is part of the existing product and is not redesigned in this concept. The concept covers one screen: the start of the Opening Case and what follows it.';openOv('info')}
+$$('[data-soon]').forEach(function(b){b.addEventListener('click',function(){info(b.getAttribute('data-soon'))})});
+$$('[data-open-concept]').forEach(function(b){b.addEventListener('click',function(){openOv('concept')})});
+$$('[data-view-link]').forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-view-link'))})});
+$('[data-scroll-acc]').addEventListener('click',function(){show('start');setTimeout(function(){$('#acc').scrollIntoView({behavior:'smooth',block:'start'});var first=$('.acc-item');if(first&&!first.classList.contains('open'))toggleAcc(first)},120)});
+$('[data-go-reg]').addEventListener('click',function(){info('Registration')});
+
+/* accordion */
+function toggleAcc(it){var o=it.classList.toggle('open');$('button',it).setAttribute('aria-expanded',o)}
+$$('.acc-item').forEach(function(it){$('button',it).addEventListener('click',function(){toggleAcc(it)})});
+
+/* ---------- start / resume ---------- */
+function renderResume(){
+  var saved=load();var has=saved&&saved.step>0;
+  $('#resume').classList.toggle('on',!!has);
+  if(has){
+    $('#resumeTxt').textContent='In progress · step '+(saved.step+1)+' of 7';
+    $('#resumeBar').style.width=Math.round(saved.step/7*100)+'%';
+    $('#startBtn').innerHTML='Continue the case <span aria-hidden="true">→</span>';
+    $('#startNote').textContent='Picks up at '+SHORT[saved.step]+'. About '+Math.max(1,8-saved.step)+' min left.';
+  }else{
+    $('#startBtn').innerHTML='Start the case <span aria-hidden="true">→</span>';
+    $('#startNote').textContent='Name and email only after the case, to claim your credit. NPI check only to enter the ranking.';
+  }
+}
+$('#startBtn').addEventListener('click',function(){
+  var saved=load();
+  if(saved&&saved.step>0){state.step=saved.step;state.sel=saved.sel||{};state.conf=saved.conf||3;state.secs=saved.secs||0}
+  else{state={step:0,sel:{},conf:3,secs:0}}
+  renderStep();show('case');
+});
+$('#restart').addEventListener('click',function(){clear();state={step:0,sel:{},conf:3,secs:0};renderResume();toast('Progress cleared')});
+$('#saveExit').addEventListener('click',function(){save();show('start');toast('Saved. Continue any time, on any device')});
+
+/* ---------- case rendering ---------- */
+function renderStepper(){
+  $('#stepper').innerHTML=SHORT.map(function(l,i){
+    var c=i<state.step?'done':(i===state.step?'now':'');
+    return '<div class="st '+c+'"><i>'+(i<state.step?'✓':i+1)+'</i><span>'+l+'</span></div>';
+  }).join('');
+}
+function renderStep(){
+  var s=STEPS[state.step];
+  renderStepper();
+  $('#stepTitle').textContent=s.label;
+  $('#stepCounter').textContent='Step '+(state.step+1)+' of 7'+(s.type==='given'?' · given to you':' · your decision');
+  var b=$('#stepBody');
+  if(s.type==='given'){b.innerHTML=s.html}
+  else{
+    var sel=state.sel[s.id]||[];
+    var h='<p class="prompt">'+s.prompt+'</p><p class="hint">'+s.hint+'</p><div class="opts" role="'+(s.type==='single'?'radiogroup':'group')+'">';
+    s.opts.forEach(function(o,i){
+      var on=sel.indexOf(i)>-1;
+      h+='<button type="button" class="opt'+(s.type==='single'?' radio':'')+(on?' sel':'')+'" data-i="'+i+'" aria-pressed="'+on+'"><span class="box"></span><span>'+o.t+(on&&o.a?'<span class="answer">“'+o.a+'”</span>':'')+'</span></button>';
+    });
+    h+='</div>';
+    if(s.type==='single'){h+='<div class="conf"><label for="confR">Your confidence <span id="confV">'+state.conf+' of 5</span></label><input id="confR" type="range" min="1" max="5" value="'+state.conf+'"><small><span>Guessing</span><span>Certain</span></small></div>'}
+    b.innerHTML=h;
+    $$('.opt',b).forEach(function(btn){btn.addEventListener('click',function(){pick(s,+btn.getAttribute('data-i'))})});
+    var r=$('#confR',b);if(r)r.addEventListener('input',function(){state.conf=+r.value;$('#confV').textContent=r.value+' of 5'});
+    updateLocks(s);
+  }
+  updateNext();
+}
+function pick(s,i){
+  var sel=(state.sel[s.id]||[]).slice();var k=sel.indexOf(i);
+  if(s.type==='single'){sel=[i]}
+  else if(k>-1){sel.splice(k,1)}
+  else{if(sel.length>=s.max){toast('Up to '+s.max+' questions. Remove one to ask another');return}sel.push(i);if(s.id==='interview')toast('Answer recorded')}
+  state.sel[s.id]=sel;save();
+  var y=window.scrollY;renderStep();window.scrollTo(0,y);
+}
+function updateLocks(s){
+  if(s.type!=='multi')return;var sel=state.sel[s.id]||[];
+  $$('.opt',$('#stepBody')).forEach(function(b){var i=+b.getAttribute('data-i');b.classList.toggle('locked',sel.length>=s.max&&sel.indexOf(i)<0)});
+}
+function updateNext(){
+  var s=STEPS[state.step];var n=$('#nextBtn');
+  var need=s.type!=='given'&&!(state.sel[s.id]||[]).length;
+  n.disabled=need;
+  var last=state.step===STEPS.length-1;
+  n.textContent=need?(s.type==='single'?'Choose a diagnosis':'Choose at least one'):(last?'Close the case':'Next: '+SHORT[state.step+1]);
+}
+$('#nextBtn').addEventListener('click',function(){
+  if(state.step<STEPS.length-1){state.step++;save();renderStep();window.scrollTo({top:0,behavior:'smooth'})}
+  else{finish()}
+});
+
+/* ---------- result ---------- */
+function score(s){
+  var sel=state.sel[s.id]||[];var r=0,w=0,m=0;
+  s.opts.forEach(function(o,i){var on=sel.indexOf(i)>-1;if(o.ok&&on)r++;else if(!o.ok&&on)w++;else if(o.ok&&!on&&s.type!=='single')m++});
+  if(s.type==='single'&&r===0){m=1}
+  return {r:r,w:w,m:m};
+}
+function finish(){
+  clear();stopTimer();
+  var rows='',tot={r:0,w:0,m:0};
+  STEPS.forEach(function(s,i){
+    if(s.type==='given'){rows+='<div class="db-row dg"><span class="n">'+(i+1)+'</span><span>'+s.label+'<small>given to you</small></span><span></span></div>';return}
+    var sc=score(s);tot.r+=sc.r;tot.w+=sc.w;tot.m+=sc.m;
+    rows+='<div class="db-row"><span class="n">'+(i+1)+'</span><span>'+s.label+'<small>'+sc.r+' of '+s.opts.filter(function(o){return o.ok}).length+' right</small></span><span class="db-chips"><span class="dc ok">✓ '+sc.r+'</span><span class="dc bad">✕ '+sc.w+'</span><span class="dc miss">+ '+sc.m+'</span></span></div>';
+  });
+  $('#dbRows').innerHTML=rows;
+  var dx=score(STEPS[5]),pl=score(STEPS[6]);
+  var pts=(dx.r?2:0)+Math.max(0,pl.r-pl.w);pts=Math.min(6,pts);
+  var acc=tot.r/(tot.r+tot.w+tot.m||1);
+  var pct=Math.max(8,Math.min(97,Math.round(acc*100-6+pts*2)));
+  $('#ptsNum').textContent=pts;
+  $('#pctNum').innerHTML=pct+'<sup>'+suf(pct)+'</sup>';
+  $('#pctSay').textContent='Ahead of '+pct+'% of pulmonologists who worked this case';
+  setTimeout(function(){$('#ringArc').style.strokeDashoffset=327-327*pct/100},150);
+  var famAsked=(state.sel.interview||[]).indexOf(3)>-1;
+  $('#turn').innerHTML=famAsked
+    ?'<b>Where the case turned</b>You asked about family history. A brother with lung scarring plus a UIP pattern makes familial pulmonary fibrosis likely, which also matters for his relatives.'
+    :'<b>Where the case turned</b>The family history question. His brother had lung scarring, a strong pointer to familial pulmonary fibrosis. Most participants who asked it reached the diagnosis with higher confidence.';
+  show('result');
+}
+function suf(n){var j=n%10,k=n%100;if(j==1&&k!=11)return'st';if(j==2&&k!=12)return'nd';if(j==3&&k!=13)return'rd';return'th'}
+
+$('#claimForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=$('#iName').value.trim(),m=$('#iMail').value.trim(),ok=true;
+  $('#fName').classList.toggle('err',n.length<3);if(n.length<3)ok=false;
+  var mv=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m);$('#fMail').classList.toggle('err',!mv);if(!mv)ok=false;
+  if(!ok)return;
+  $('#claimForm').style.display='none';$('#claimDone').classList.add('on');
+  $('#claimTxt').textContent='We sent a link to '+m+'. Your certificate is ready after the 2-minute evaluation.';
+  var e2=$('#nlEmail');e2.classList.add('done');$('i',e2).textContent='✓';
+  $('#npiBtn').className='btn btn-primary w100';
+  toast('Credit saved to your CME bank');
+});
+['iName','iMail'].forEach(function(id){$('#'+id).addEventListener('input',function(){this.parentNode.classList.remove('err')})});
+$('#npiBtn').addEventListener('click',function(){info('The NPI check')});
+
+/* ---------- init ---------- */
+renderResume();
+var seen=false;try{seen=sessionStorage.getItem('oc-concept-seen')==='1'}catch(e){}
+if(!seen){openOv('concept');try{sessionStorage.setItem('oc-concept-seen','1')}catch(e){}}
+})();
+</script>
+</body>
+</html>
